@@ -1,4 +1,4 @@
-// 2022-05-16 14:34
+// 2022-06-16
 
 import { PageConfig, URLExt } from '@jupyterlab/coreutils'
 (window as any).__webpack_public_path__ = URLExt.join(

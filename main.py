@@ -1,4 +1,4 @@
-# 2022-05-16 13:25
+# 2022-06-16
 
 import json
 import os
@@ -44,12 +44,12 @@ class ExampleHandler(ExtensionHandlerJinjaMixin, ExtensionHandlerMixin, JupyterH
 
 
 class ExampleApp(LabServerApp):
-    extension_url = "/example"
-    default_url = "/example"
-    app_url = "/example"
+    extension_url = "/dsl"
+    default_url = "/dsl"
+    app_url = "/dsl"
     name = __name__
     load_other_extensions = False
-    app_name = "独立的JupyterLab Example Cell"
+    app_name = "dsl-demo"
     static_dir = os.path.join(HERE, "build")
     templates_dir = os.path.join(HERE, "templates")
     app_version = version
@@ -61,7 +61,7 @@ class ExampleApp(LabServerApp):
 
     def initialize_handlers(self):
         """Add example handler to Lab Server's handler list."""
-        self.handlers.append(("/example", ExampleHandler))
+        self.handlers.append(("/dsl", ExampleHandler))
 
 
 if __name__ == "__main__":
