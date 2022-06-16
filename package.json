@@ -4,9 +4,13 @@
   "private": true,
   "scripts": {
     "build": "tsc -p src && webpack",
-    "watch": "tsc -p src -w && webpack",
+    "serve": "webpack --watch",
     "clean": "rimraf build"
   },
+  "files": [
+    "index.css"
+  ],
+  "style": "index.css",
   "dependencies": {
     "@jupyterlab/application": "^3.4.2",
     "@jupyterlab/apputils": "^3.4.2",
@@ -31,11 +35,13 @@
     "rimraf": "~3.0.0",
     "style-loader": "~2.0.0",
     "svg-url-loader": "~6.0.0",
+    "ts-loader": "^9.3.0",
     "typescript": "~4.1.3",
     "url-loader": "~4.1.0",
     "watch": "~1.0.2",
     "webpack": "^5.41.1",
     "webpack-cli": "^4.1.0",
+    "webpack-dev-server": "^4.9.2",
     "whatwg-fetch": "^3.0.0"
   }
 }

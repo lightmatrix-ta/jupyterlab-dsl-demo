@@ -1,14 +1,18 @@
 const webpack = require('webpack');
+const path = require('path')
 
 module.exports = {
-  entry: ['whatwg-fetch', './build/index.js'],
+  // entry: ['whatwg-fetch', './build/index.js'],
+  entry: './src/index.ts',
   output: {
+    // path: path.resolve(__dirname + 'build'),
     path: __dirname + '/build',
     filename: 'bundle.js'
   },
   bail: true,
   devtool: 'cheap-source-map',
-  mode: 'production',
+  // mode: 'production',
+  mode: 'development',
   module: {
     rules: [
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
@@ -36,8 +40,16 @@ module.exports = {
       {
         test: /\.(png|jpg|gif|ttf|woff|woff2|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         use: [{ loader: 'url-loader', options: { limit: 10000 } }]
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       }
     ]
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
   },
   plugins: [
     new webpack.DefinePlugin({
