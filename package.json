@@ -1,9 +1,10 @@
 {
-  "name": "@jupyterlab/example-cell",
+  "name": "@jupyterlab/dsl-demo",
   "version": "3.4.2",
   "private": true,
   "scripts": {
     "build": "tsc -p src && webpack",
+    "watch": "tsc -p src -w && webpack",
     "clean": "rimraf build"
   },
   "dependencies": {
