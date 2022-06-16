@@ -3,7 +3,7 @@
 import { PageConfig, URLExt } from '@jupyterlab/coreutils'
 (window as any).__webpack_public_path__ = URLExt.join(
   PageConfig.getBaseUrl(),
-  'example/'
+  'dsl/'
 )
 
 import '@jupyterlab/application/style/index.css'
@@ -44,7 +44,7 @@ function main(): void {
   const sessionContext = new SessionContext({
     sessionManager,
     specsManager,
-    name: 'Example'
+    name: 'dsl'
   })
   const mimeService = new CodeMirrorMimeTypeService()
 
@@ -153,7 +153,7 @@ function main(): void {
 
   // Start up the kernel
   void sessionContext.initialize().then(() => {
-    console.debug('Example started!')
+    console.debug('dsl started!')
   })
 }
 
