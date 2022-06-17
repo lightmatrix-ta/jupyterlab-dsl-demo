@@ -2,3 +2,7 @@
 .el-input {
   font-size: 23px;
 }
+
+.el-slider {
+  flex: 1;
+}

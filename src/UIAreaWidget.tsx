@@ -6,7 +6,8 @@ import {
   InputNumber,
   Checkbox,
   Select,
-  Radio
+  Radio,
+  Slider
 } from 'element-react'
 import 'element-theme-default'
 import '../style/element.css'
@@ -207,8 +208,8 @@ class UIAreaComponent extends React.Component<IProps> {
                   <div key={keyIndex} className="react-ui-area-widget-container">
                     <span style={{marginRight: 8, fontWeight: 'bold'}}>{pyValName} =</span>
                     {
-                      listSource.map(el => {
-                        return <Radio value={el.value} 
+                      listSource.map((el, index) => {
+                        return <Radio key={'Radio=' + keyIndex + index} value={el.value} 
                             checked={el.value === pyValue}
                             onChange={(newValue: any) => {
                               this.onInputChanged(newValue, originPy, pyValue)
@@ -220,6 +221,22 @@ class UIAreaComponent extends React.Component<IProps> {
                     }
                   </div>
                 ) 
+              }
+              break
+            case 'slider':
+              {
+                pyValue = pyValue.replace(/\s+/g, '')
+                const pyValueNum = +pyValue
+                result.push(
+                  <div key={keyIndex} className="react-ui-area-widget-container">
+                    <span style={{marginRight: 8, fontWeight: 'bold'}}>{pyValName} =</span>
+                    <Slider value={pyValueNum}
+                      onChange={(newValue: any) => {
+                        this.onInputChanged(newValue, originPy, pyValue)
+                      }}
+                    />
+                  </div>
+                )
               }
               break
             default:
