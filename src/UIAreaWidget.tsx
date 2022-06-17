@@ -4,7 +4,8 @@ import React from 'react'
 import {
   Input,
   InputNumber,
-  Checkbox
+  Checkbox,
+  Select
 } from 'element-react'
 import 'element-theme-default'
 import '../style/element.css'
@@ -131,6 +132,57 @@ class UIAreaComponent extends React.Component<IProps> {
                     />
                   </div>
                 )
+              }
+              break
+            case 'select':
+              {
+                const listSource = [
+                  // { value:'选项A', label: '选项A' },
+                  // { value:'选项B', label: '选项B' },
+                  // { value:'选项C', label: '选项C' }
+                ]
+
+                for (const item2 of dslSplits) {
+                  const containsList = (item2.indexOf('list') !== -1)
+                  if (containsList) {
+                    let splitsForList = item2.split('=')
+                    let listStr = splitsForList[1]
+                    listStr = listStr.replace('[', '')
+                    listStr = listStr.replace(']', '')
+                    splitsForList = listStr.split(',') 
+
+                    for (const value of splitsForList) {
+                      listSource.push({
+                        value, label: value
+                      }) 
+                    }
+
+                    break
+                  }
+                }
+
+                result.push(
+                  <div key={keyIndex} className="react-ui-area-widget-container">
+                    <span style={{marginRight: 8, fontWeight: 'bold'}}>{pyValName} =</span>
+                    {/* <Input value={pyValue}
+                      style={{width: 350, fontSize: 18}} className="ui-input-width"
+                      onChange={(newValue: any) => {
+                        this.onInputChanged(newValue, originPy, pyValue)
+                      }}
+                    /> */}
+                    <Select value={pyValue}
+                      onChange={(newValue: any) => {
+                        this.onInputChanged(newValue, originPy, pyValue)
+                      }}
+                    >
+                      {
+                        listSource.map(el => {
+                          return <Select.Option key={el.value} label={el.label} value={el.value} />
+                        })
+                      }
+                    </Select>
+                  </div>
+                ) 
               }
               break
             default:
