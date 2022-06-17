@@ -7,10 +7,6 @@
     "serve": "webpack --watch",
     "clean": "rimraf build"
   },
-  "files": [
-    "index.css"
-  ],
-  "style": "index.css",
   "dependencies": {
     "@babel/runtime": "^7.18.3",
     "@jupyterlab/application": "^3.4.2",

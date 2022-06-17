@@ -10,7 +10,7 @@ import '@jupyterlab/application/style/index.css'
 import '@jupyterlab/cells/style/index.css'
 import '@jupyterlab/theme-light-extension/style/theme.css'
 import '@jupyterlab/completer/style/index.css'
-import '../index.css'
+import '../style/index.css'
 
 import { SessionContext, Toolbar } from '@jupyterlab/apputils'
 import { CodeCell, CodeCellModel } from '@jupyterlab/cells'

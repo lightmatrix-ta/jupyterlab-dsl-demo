@@ -1,8 +1,12 @@
 import { ReactWidget } from '@jupyterlab/apputils'
 import React from 'react'
 
+import {
+  Input,
+  InputNumber
+} from 'element-react'
 import 'element-theme-default'
-import { Input } from 'element-react'
+import '../style/element.css'
 
 // const UIAreaComponent = () => {
 //   return (
@@ -67,19 +71,36 @@ class UIAreaComponent extends React.Component<IProps> {
           const type = subSplits[1]
           switch (type) {
             case 'text':
-              result.push (
+              result.push(
                 <div key={keyIndex} className="react-ui-area-widget-container">
                   <span style={{marginRight: 8, fontWeight: 'bold'}}>{pyValName} =</span>
-                  <Input value={pyValue} size="small"
+                  <Input value={pyValue}
                     style={{width: 350, fontSize: 18}} className="ui-input-width"
                     onChange={(newValue: any) => {
-                      // console.log(newText)
                       this.onInputChanged(newValue, originPy, pyValue)
                     }}
                   />
                 </div>
               )
-              break 
+              break
+            case 'number':
+              {
+                pyValue = pyValue.replace(/\s+/g, '')
+                const pyValueNum = +pyValue
+                result.push(
+                  <div key={keyIndex} className="react-ui-area-widget-container">
+                    <span style={{marginRight: 8, fontWeight: 'bold'}}>{pyValName} =</span>
+                    <InputNumber defaultValue={pyValueNum} value={pyValueNum}
+                      style={{width: 350, fontSize: 28}} className="ui-input-width"
+                      onChange={(newValue: any) => {
+                        this.onInputChanged(newValue, originPy, pyValue)
+                      }}
+                    />
+                  </div>
+                )
+              }
+              
+              break
             default:
               console.log('unknown type...')
           }
