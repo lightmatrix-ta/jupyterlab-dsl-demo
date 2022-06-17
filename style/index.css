@@ -79,7 +79,7 @@ body {
 
 .react-ui-area-widget-container {
   padding-top: 6px;
-  padding-bottom: 6px;
+  padding-bottom: 8px;
 
   display: flex;
   align-items: center;

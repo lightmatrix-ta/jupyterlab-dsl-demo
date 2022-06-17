@@ -5,7 +5,8 @@ import {
   Input,
   InputNumber,
   Checkbox,
-  Select
+  Select,
+  Radio
 } from 'element-react'
 import 'element-theme-default'
 import '../style/element.css'
@@ -164,12 +165,6 @@ class UIAreaComponent extends React.Component<IProps> {
                 result.push(
                   <div key={keyIndex} className="react-ui-area-widget-container">
                     <span style={{marginRight: 8, fontWeight: 'bold'}}>{pyValName} =</span>
-                    {/* <Input value={pyValue}
-                      style={{width: 350, fontSize: 18}} className="ui-input-width"
-                      onChange={(newValue: any) => {
-                        this.onInputChanged(newValue, originPy, pyValue)
-                      }}
-                    /> */}
                     <Select value={pyValue}
                       onChange={(newValue: any) => {
                         this.onInputChanged(newValue, originPy, pyValue)
@@ -181,6 +176,48 @@ class UIAreaComponent extends React.Component<IProps> {
                         })
                       }
                     </Select>
+                  </div>
+                ) 
+              }
+              break
+            case 'radio':
+              {
+                const listSource = []
+
+                for (const item2 of dslSplits) {
+                  const containsList = (item2.indexOf('list') !== -1)
+                  if (containsList) {
+                    let splitsForList = item2.split('=')
+                    let listStr = splitsForList[1]
+                    listStr = listStr.replace('[', '')
+                    listStr = listStr.replace(']', '')
+                    splitsForList = listStr.split(',') 
+
+                    for (const value of splitsForList) {
+                      listSource.push({
+                        value, label: value
+                      }) 
+                    }
+
+                    break
+                  }
+                }
+
+                result.push(
+                  <div key={keyIndex} className="react-ui-area-widget-container">
+                    <span style={{marginRight: 8, fontWeight: 'bold'}}>{pyValName} =</span>
+                    {
+                      listSource.map(el => {
+                        return <Radio value={el.value} 
+                            checked={el.value === pyValue}
+                            onChange={(newValue: any) => {
+                              this.onInputChanged(newValue, originPy, pyValue)
+                            }}
+                          >
+                            {el.label}
+                          </Radio>
+                      }) 
+                    }
                   </div>
                 ) 
               }
