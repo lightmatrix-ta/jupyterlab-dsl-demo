@@ -72,6 +72,10 @@ function main(): void {
     model: new CodeCellModel({})
   }).initializeState()
 
+  // setInterval(()=> {
+  //   console.log('code=', cellWidget.editor.model.value.text)
+  // }, 3000)
+
   // Handle the mimeType for the current kernel asynchronously.
   sessionContext.kernelChanged.connect(() => {
     void sessionContext.session?.kernel?.info.then(info => {
