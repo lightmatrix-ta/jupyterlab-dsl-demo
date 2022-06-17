@@ -76,6 +76,12 @@ function main(): void {
   //   console.log('code=', cellWidget.editor.model.value.text)
   // }, 3000)
 
+  // cellWidget.editor.model.value.text = 'print("hello...")'
+  // setInterval(() => {
+  //   const code = cellWidget.editor.model.value.text  
+  //   cellWidget.editor.model.value.text = code + 'print("hello...")\n'
+  // }, 3000)
+
   // Handle the mimeType for the current kernel asynchronously.
   sessionContext.kernelChanged.connect(() => {
     void sessionContext.session?.kernel?.info.then(info => {
