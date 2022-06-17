@@ -42,3 +42,22 @@ body {
 .jp-Completer-Cell {
   position: fixed;
 }
+
+/* ---------------------------------------------------------------- */
+
+.react-intro-widget {
+  min-height: 40px;
+  margin-left: 30px;
+  margin-top: 0;
+}
+
+.react-intro-ul {
+  background-color: black;
+  padding: 10px 25px;
+}
+
+.react-intro-li {
+  /* font-weight: bold; */
+  font-size: 15px; 
+  color: whitesmoke;
+}

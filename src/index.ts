@@ -37,6 +37,8 @@ import {
 import { CommandRegistry } from '@lumino/commands'
 import { BoxPanel, Widget } from '@lumino/widgets'
 
+import { IntroWidget } from './IntroWidget'
+
 function main(): void {
   const kernelManager = new KernelManager()
   const specsManager = new KernelSpecManager()
@@ -115,10 +117,15 @@ function main(): void {
   panel.id = 'main'
   panel.direction = 'top-to-bottom'
   panel.spacing = 0 
+
   panel.addWidget(toolbar)
+  const introWidget: IntroWidget = new IntroWidget()
+  panel.addWidget(introWidget)
   panel.addWidget(cellWidget)
+
   BoxPanel.setStretch(toolbar, 0)
-  BoxPanel.setStretch(cellWidget, 1)
+  BoxPanel.setStretch(introWidget, 1)
+  BoxPanel.setStretch(cellWidget, 4)
 
   // Attach the panel to the DOM.
   Widget.attach(panel, document.body)
