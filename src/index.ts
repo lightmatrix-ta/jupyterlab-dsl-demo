@@ -82,6 +82,10 @@ function main(): void {
   //   cellWidget.editor.model.value.text = code + 'print("hello...")\n'
   // }, 3000)
 
+  // cellWidget.editor.model.value.changed.connect((obj, _) => {
+  //   console.log('changed...=', obj.text)
+  // })
+
   // Handle the mimeType for the current kernel asynchronously.
   sessionContext.kernelChanged.connect(() => {
     void sessionContext.session?.kernel?.info.then(info => {
