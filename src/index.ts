@@ -86,6 +86,10 @@ function main(): void {
   //   console.log('changed...=', obj.text)
   // })
 
+  cellWidget.editor.model.value.changed.connect((obj, _) => {
+    onCodeChanged(obj.text) 
+  })
+
   // Handle the mimeType for the current kernel asynchronously.
   sessionContext.kernelChanged.connect(() => {
     void sessionContext.session?.kernel?.info.then(info => {
@@ -131,7 +135,7 @@ function main(): void {
   const panel = new BoxPanel()
   panel.id = 'main'
   panel.direction = 'top-to-bottom'
-  panel.spacing = 0 
+  panel.spacing = 12 
 
   panel.addWidget(toolbar)
   const introWidget: IntroWidget = new IntroWidget()
@@ -150,7 +154,7 @@ function main(): void {
 
   BoxPanel.setStretch(toolbar, 0)
   BoxPanel.setStretch(introWidget, 1)
-  BoxPanel.setStretch(cellPanel, 4)
+  BoxPanel.setStretch(cellPanel, 3)
 
   // Attach the panel to the DOM.
   Widget.attach(panel, document.body)
@@ -190,3 +194,18 @@ function main(): void {
 }
 
 window.addEventListener('load', main)
+
+const onCodeChanged = (code: string) => {
+  // console.log('code=', code)
+  const splits = code.split('\n')
+  // console.log('splits=', splits)
+  const dslList = []
+  for (const line of splits) {
+    const startIndex = line.indexOf('#@')
+    if (startIndex !== -1) {
+      const dsl = line.substring(startIndex)
+      dslList.push(dsl)
+    }
+  }
+  console.log('dsls=', dslList)
+}
