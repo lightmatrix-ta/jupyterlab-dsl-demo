@@ -1,7 +1,7 @@
 import { ReactWidget } from '@jupyterlab/apputils'
 import React from 'react'
 
-function IntroComponent() {
+const IntroComponent = () => {
   return (
     <>
       <h2>Python注释里的DSL - Made with love by Machine Learning, kidding, by my hands 😂 🤣 ...</h2>
