@@ -4,7 +4,8 @@ import React from 'react'
 const IntroComponent = () => {
   return (
     <>
-      <h2>Python注释里的DSL - Made with love by Machine Learning, kidding, by my hands 😂 🤣 ...</h2>
+      <h1>Python行尾注释中的DSL Demo</h1>
+      <h2> &nbsp;&nbsp;&nbsp;&nbsp; - 😂 🤣 😄 Made with love by Machine Learning, kidding, by my hands 😂 🤣 😄 ......</h2>
       <ul className='react-intro-ul'>
         <li className='react-intro-li'>
           #@input type=text
@@ -22,7 +23,7 @@ const IntroComponent = () => {
           #@input type=radio &nbsp;&nbsp;list=[1, 2, 3]
         </li>
         <li className='react-intro-li'>
-          #@input type=slider min=10 max=80 
+          #@input type=slider &nbsp;min=10 max=80 value=66 
         </li>
         <li className='react-intro-li'>
           ......... 
