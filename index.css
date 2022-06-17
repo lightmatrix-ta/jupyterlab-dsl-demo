@@ -63,10 +63,29 @@ body {
 }
 
 .react-ui-area-widget {
-  background-color: #e0e0e0;
-  padding-left: 20px;
+  background-color:antiquewhite;
+  padding-left: 6px;
+  padding-top: 6px;
 }
 
 :root {
   --jp-code-font-size: 18px; 
+}
+
+.jp-CodeCell {
+  background-color: aliceblue;
+}
+
+.react-ui-area-widget-container {
+  padding-top: 6px;
+  padding-bottom: 6px;
+
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.ui-input-width {
+  /* width: 200px; */
+  font-size: 16px;
 }

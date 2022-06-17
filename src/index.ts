@@ -40,6 +40,8 @@ import { BoxPanel, Widget } from '@lumino/widgets'
 import { IntroWidget } from './IntroWidget'
 import { UIAreaWidget } from './UIAreaWidget'
 
+let _cellWidget: CodeCell
+
 function main(): void {
   const kernelManager = new KernelManager()
   const specsManager = new KernelSpecManager()
@@ -67,7 +69,7 @@ function main(): void {
   // Create the cell widget with a default rendermime instance.
   const rendermime = new RenderMimeRegistry({ initialFactories })
 
-  const cellWidget = new CodeCell({
+  _cellWidget = new CodeCell({
     rendermime,
     model: new CodeCellModel({})
   }).initializeState()
@@ -86,8 +88,10 @@ function main(): void {
   //   console.log('changed...=', obj.text)
   // })
 
-  cellWidget.editor.model.value.changed.connect((obj, _) => {
-    onCodeChanged(obj.text) 
+  const uiAreaWidget = new UIAreaWidget()
+
+  _cellWidget.editor.model.value.changed.connect((obj, _) => {
+    onCodeChanged(obj.text, uiAreaWidget) 
   })
 
   // Handle the mimeType for the current kernel asynchronously.
@@ -95,7 +99,7 @@ function main(): void {
     void sessionContext.session?.kernel?.info.then(info => {
       const lang = info.language_info
       const mimeType = mimeService.getMimeTypeByLanguage(lang)
-      cellWidget.model.mimeType = mimeType
+      _cellWidget.model.mimeType = mimeType
     })
   })
 
@@ -103,7 +107,7 @@ function main(): void {
   sessionContext.kernelPreference = { autoStartDefault: true }
 
   // Set up a completer.
-  const editor = cellWidget.editor
+  const editor = _cellWidget.editor
   const model = new CompleterModel()
   const completer = new Completer({ editor, model })
   const connector = new KernelConnector({ session: sessionContext.session })
@@ -144,12 +148,11 @@ function main(): void {
   const cellPanel = new BoxPanel()
   cellPanel.id = 'cell-panel'
   cellPanel.direction = 'left-to-right'
-  cellPanel.spacing = 20
+  cellPanel.spacing = 10
 
   panel.addWidget(cellPanel)
 
-  cellPanel.addWidget(cellWidget)
-  const uiAreaWidget = new UIAreaWidget()
+  cellPanel.addWidget(_cellWidget)
   cellPanel.addWidget(uiAreaWidget)
 
   BoxPanel.setStretch(toolbar, 0)
@@ -164,7 +167,7 @@ function main(): void {
   window.addEventListener('resize', () => {
     panel.update()
   })
-  cellWidget.activate()
+  _cellWidget.activate()
 
   // Add the commands.
   commands.addCommand('invoke:completer', {
@@ -173,7 +176,7 @@ function main(): void {
     }
   })
   commands.addCommand('run:cell', {
-    execute: () => CodeCell.execute(cellWidget, sessionContext)
+    execute: () => CodeCell.execute(_cellWidget, sessionContext)
   })
 
   commands.addKeyBinding({
@@ -195,17 +198,27 @@ function main(): void {
 
 window.addEventListener('load', main)
 
-const onCodeChanged = (code: string) => {
+const onCodeChanged = (code: string, uiContainer: UIAreaWidget) => {
   // console.log('code=', code)
   const splits = code.split('\n')
   // console.log('splits=', splits)
+  const pyList = []
   const dslList = []
   for (const line of splits) {
     const startIndex = line.indexOf('#@')
     if (startIndex !== -1) {
+      const py = line.substring(0, startIndex)
       const dsl = line.substring(startIndex)
+      pyList.push(py)
       dslList.push(dsl)
     }
   }
-  console.log('dsls=', dslList)
+  // console.log('dsls=', dslList)
+  uiContainer.updateUIArea(pyList, dslList, updateCodeByReact)
+}
+
+const updateCodeByReact = (originCode: string, newCode: string) => {
+  let code = _cellWidget.editor.model.value.text
+  code = code.replace(originCode, newCode)
+  _cellWidget.editor.model.value.text = code
 }
