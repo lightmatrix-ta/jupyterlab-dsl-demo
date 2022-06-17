@@ -3,7 +3,8 @@ import React from 'react'
 
 import {
   Input,
-  InputNumber
+  InputNumber,
+  Checkbox
 } from 'element-react'
 import 'element-theme-default'
 import '../style/element.css'
@@ -39,6 +40,17 @@ class UIAreaComponent extends React.Component<IProps> {
     if (pyValue === '') {
       pyValue = '\"\"'
       newValue = '"' + newValue + '"'
+    }
+    const newLinePySrc = linePySrc.replace(pyValue, newValue)
+    console.log(newLinePySrc)
+    this.props.updateCodeFunc(linePySrc, newLinePySrc)
+  }
+
+  onCheckboxChanged(checked: boolean, linePySrc: string, pyValue: string) {
+    console.log('checked=', checked)
+    let newValue = 'True'
+    if (!checked) {
+      newValue = 'False'
     }
     const newLinePySrc = linePySrc.replace(pyValue, newValue)
     console.log(newLinePySrc)
@@ -99,7 +111,27 @@ class UIAreaComponent extends React.Component<IProps> {
                   </div>
                 )
               }
-              
+              break
+            case 'bool':
+              {
+                pyValue = pyValue.replace(/\s+/g, '')
+                let pyValueBool = false
+                if (pyValue === 'True') {
+                  pyValueBool = true
+                } else if (pyValue === 'False') {
+                  pyValueBool = false
+                }
+                result.push(
+                  <div key={keyIndex} className="react-ui-area-widget-container">
+                    <span style={{marginRight: 8, fontWeight: 'bold'}}>{pyValName} =</span>
+                    <Checkbox checked={pyValueBool}
+                      onChange={(newValue: any) => {
+                        this.onCheckboxChanged(newValue, originPy, pyValue)
+                      }}
+                    />
+                  </div>
+                )
+              }
               break
             default:
               console.log('unknown type...')
